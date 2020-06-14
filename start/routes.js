@@ -23,9 +23,20 @@ const Route = use ('Route');
 Route.get ('/admin/products', 'Admin/ProductController.getAll'); //gets all products
 Route.get ('/admin/products/:id', 'Admin/ProductController.getOne'); //gets product by id
 Route.post ('/admin/products', 'Admin/ProductController.store'); //create product
-// Route.get ('/admin/products/create', 'Admin/ProductController.create'); //lmao what is this?
-// Route.get ('/admin/products/:id/edit', 'Admin/ProductController.edit'); shows products with brands
-Route.put ('/admin/products/:id', 'Admin/ProductController.update');
-//Route.get ('/admin/products/:id/delete', 'Admin/ProductController.delete');
-Route.delete ('/admin/products/:id', 'Admin/ProductController.delete');
+Route.put ('/admin/products/:id', 'Admin/ProductController.update'); //edit product by id
+Route.delete ('/admin/products/:id', 'Admin/ProductController.delete'); //delete product by id
+
+// Admin/Brands
+Route.get('/admin/brands', 'Admin/BrandController.getAll') //get all
+Route.post('/admin/brands', 'Admin/BrandController.store') //add/create a brand
+Route.get('/admin/brands/:id', 'Admin/BrandController.getOne') //get one brand
+Route.put('/admin/brands/:id', 'Admin/BrandController.update') //edit a brand by id
+Route.delete('/admin/brands/:id', 'Admin/BrandController.delete') // delete brand by id
+
+//auth/login/getUser
+Route.post('/admin/register', 'Admin/UserController.register') //reg user
+Route.post('/admin/login', 'Admin/UserController.login') //login user
+Route.get('/admin/users/:id', 'Admin/UserController.getUser') //get a user by id
+
+
 
