@@ -5,9 +5,9 @@ const sanitize = use ('sqlstring');
 class ProductController {
   async getAll({request, response}) {
     try {
-      let allProducts = await Database.raw (`
+      let products = await Database.raw (`
         SELECT products.id,
-        products.title, products.sku, products.price, brands.title as brand,
+        products.title, products.description, products.sku, products.price, brands.title as brand,
         concat(users.f_name, ' ', users.l_name) as user,
         products.material, products.qty, products.size,
         products.user_id, products.created_at
@@ -18,9 +18,9 @@ class ProductController {
         ON products.user_id = users.id
         ORDER BY created_at ASC
       `);
-      allProducts = allProducts[0];
+      products = products[0];
 
-      return response.json ({allProducts});
+      return response.json (products);
     } catch (error) {
       console.log (error);
       return response.status (500);
@@ -79,7 +79,7 @@ class ProductController {
       `);
       product = product[0][0];
 
-      return response.json ({product});
+      return response.json (product);
     } catch (error) {
       console.log (error);
       return response.status (500);

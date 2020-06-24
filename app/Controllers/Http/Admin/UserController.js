@@ -58,24 +58,72 @@ class UserController {
     }
   }
 
-  async login({request, response, auth}) {
+  async login({request, auth, response}) {
+    const email = request.input("email")
+    const password = request.input("password");
+    try {
+      if (await auth.attempt(email, password)) {
+        let user = await User.findBy('email', email)
+        let token = await auth.generate(user)
+        return response.json({"token": token.token})
+      }
+//how to add a function that will return an object without a property under constraints
+    }
+    catch (e) {
+      return response.json({message: 'You first need to register!'})
+    }
+}
+
+  async getUser({response, request, auth}) {
+    try {
+      let user = await auth.getUser()
+      return response.json ({"user":
+    {
+      "id": user.id,
+      "f_name": user.f_name,
+      "l_name": user.l_name,
+      "email": user.email,
+      "phone_number": user.phone_number,
+      "birth_date": user.birth_date,
+      "created_at": user.created_at,
+      "updated_at": user.updated_at,
+    }});
+    } catch (error) {
+      response.send('Missing or invalid jwt token')
+    }
+  }
+}
+
+module.exports = UserController;
+
+//asdasd
+/**
+ * async login({request, response, auth}) {
     const {email, password} = request.only (['email', 'password']);
 
     const token = await auth.attempt (email, password);
     return response.json (token);
   }
 
-  async getUser({params, response}) {
+
+
+
+
+
+
+  async getUser({response, request, auth}) {
     const user = await User.find (params.id);
-    
-    const res = {
-      f_name: user.f_name,
-      l_name: user.l_name,
-      email: user.email,
-    };
 
-    return response.json (res);
+    return response.json ({"user":
+    {
+      "id": user.id,
+      "f_name": user.f_name,
+      "l_name": user.l_name,
+      "email": user.email,
+      "phone_number": user.phone_number,
+      "birth_date": user.birth_date,
+      "created_at": user.created_at,
+      "updated_at": user.updated_at,
+    }});
   }
-}
-
-module.exports = UserController;
+ */

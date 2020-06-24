@@ -29,7 +29,9 @@
     "mysql": "^2.18.1",
     "sqlstring": "^2.3.2"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  },
   "autoload": {
     "App": "./app"
   }
